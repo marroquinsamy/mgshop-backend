@@ -1,0 +1,56 @@
+@api = http://localhost:4000
+@id = 5f9896951eed2c9c43776115
+@title = KN95 con válvula para niños
+@description = KN95 con válvula para niños. Importada, certificada, de 5 capas, con clip nasal y en distintos diseños.
+@price = 13
+@file = kn95-para-ninos.jpeg
+
+
+### Get all products
+GET {{api}}/products
+
+
+### Get an unique product
+GET {{api}}/products/{{id}}
+
+
+### Create a new product
+POST {{api}}/products
+Content-Type: multipart/form-data; boundary=test
+
+--test
+Content-Disposition: form-data; name="title"
+
+{{title}}
+
+--test
+Content-Disposition: form-data; name="description"
+
+{{description}}
+
+--test
+Content-Disposition: form-data; name="price"
+
+{{price}}
+
+--test
+Content-Disposition: form-data; name="image"; filename={{file}}
+Content-Type: image/jpeg
+
+< ./{{file}}
+--test--
+
+
+### Delete a product
+DELETE {{api}}/products/{{id}}
+
+
+### Update a product
+PUT {{api}}/products/{{id}}
+Content-Type: application/json
+
+{
+  "title": "{{title}}",
+  "description": "{{description}}",
+  "price": "{{price}}"
+}
