@@ -110,3 +110,6 @@ uploads
 *.jpg
 *.jpeg
 *.png
+
+# HTTP operations test
+products.http
