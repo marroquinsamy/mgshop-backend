@@ -1,9 +1,9 @@
 @api = http://localhost:4000
 @id = 5f9896951eed2c9c43776115
-@title = KN95 sin válvula para adultos
-@description = KN95 sin válvula para adultos. Importada, certificada, de 5 capas, con clip nasal y en empaque individual.
-@price = 5
-@file = KN95.jpeg
+@title = Quirúrgicas para adultos
+@description = Mascarillas quirúrgicas para adultos. Importada, certificada, de 3 capas, con clip nasal. Caja de 50 unidades.
+@price = 60
+@file = quirurgicas.jpeg
 
 
 ### Get all products
