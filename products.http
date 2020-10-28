@@ -1,9 +1,9 @@
 @api = http://localhost:4000
 @id = 5f9896951eed2c9c43776115
-@title = KN95 con válvula para niños
-@description = KN95 con válvula para niños. Importada, certificada, de 5 capas, con clip nasal y en distintos diseños.
-@price = 13
-@file = kn95-para-ninos.jpeg
+@title = KN95 sin válvula para adultos
+@description = KN95 sin válvula para adultos. Importada, certificada, de 5 capas, con clip nasal y en empaque individual.
+@price = 5
+@file = KN95.jpeg
 
 
 ### Get all products

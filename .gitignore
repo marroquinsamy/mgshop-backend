@@ -105,3 +105,8 @@ dist
 
 # Uploads folder
 uploads
+
+# Sample pictures
+*.jpg
+*.jpeg
+*.png
