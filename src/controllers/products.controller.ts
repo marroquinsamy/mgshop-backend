@@ -3,32 +3,42 @@ import Product, { ProductDocument } from '../models/Product'
 import path from 'path'
 import fs from 'fs-extra'
 
+const duration: number = 3000
+
 export const getProducts = async (
   req: Request,
   res: Response
-): Promise<Response> => {
+): Promise<Response<ProductDocument[]> | undefined> => {
   try {
     const products: ProductDocument[] = await Product.find()
+    // const products: ProductDocument[] = []
 
-    return res.status(200).json(products)
+    setTimeout(() => {
+      products.length === 0
+        ? res.status(204).json()
+        : res.status(200).json(products)
+    }, duration)
   } catch (error) {
     console.log(error)
-    return res.status(204).json()
+    return res.status(500).json('oh noes!')
   }
 }
 
 export const getProduct = async (
   req: Request,
   res: Response
-): Promise<Response> => {
+): Promise<Response<ProductDocument> | undefined> => {
   try {
     const { id } = req.params
-    const productFound: ProductDocument | null = await Product.findById(id)
+    const product: ProductDocument | null = await Product.findById(id)
 
-    return res.status(200).json(productFound)
+    setTimeout(() => {
+      product ? res.status(200).json(product) : res.status(404).json()
+    }, duration)
   } catch (error) {
     console.log(error)
-    return res.status(204).json()
+
+    return res.status(404).json()
   }
 }
 
@@ -37,19 +47,21 @@ export const createProduct = async (
   res: Response
 ): Promise<Response> => {
   try {
-    const title: string = req.body.title
-    const description: string = req.body.description
-    const price: number = req.body.price
+    const {
+      title: hola,
+      description,
+      price,
+    }: { title: string; description: string; price: number } = req.body
     const imagePath: string = req.file.path
 
     const productFound: ProductDocument | null = await Product.findOne({
-      title: title,
+      title: hola,
     })
     if (productFound)
       return res.status(301).json({ message: 'The product already exists' })
 
     const product: ProductDocument = Product.build({
-      title: title,
+      title: hola,
       description: description,
       price: price,
       imagePath: imagePath,
