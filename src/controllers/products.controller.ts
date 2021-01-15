@@ -3,7 +3,7 @@ import Product, { ProductDocument } from '../models/Product'
 import path from 'path'
 import fs from 'fs-extra'
 
-const duration: number = 3000
+const duration: number = 0
 
 export const getProducts = async (
   req: Request,
