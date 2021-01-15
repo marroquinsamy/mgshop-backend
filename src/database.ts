@@ -9,10 +9,10 @@ import config from './config/config'
       useFindAndModify: false,
     }
 
-    const db = await mongoose.connect(
-      `mongodb+srv://${config.DB.MONGO_USER}:${config.DB.MONGO_PASSWORD}@${config.DB.MONGO_HOST}/${config.DB.MONGO_DB}?retryWrites=true&w=majority`,
-      connectionOptions
-    )
+    const dbURL = `mongodb+srv://${config.DB.MONGO_USER}:${config.DB.MONGO_PASSWORD}@${config.DB.MONGO_HOST}/${config.DB.MONGO_DB}?retryWrites=true&w=majority`
+    console.log(dbURL)
+
+    const db = await mongoose.connect(dbURL, connectionOptions)
 
     console.log(`DB is connected to: ${db.connection.name}`)
   } catch (error) {
