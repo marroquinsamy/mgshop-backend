@@ -1,9 +1,9 @@
 import dotenv from 'dotenv'
-import { preProcessFile } from 'typescript'
 dotenv.config()
 
 export default {
   PORT: process.env.PORT || 4000,
+  jwtSecret: process.env.JWT_SECRET || 'secrettoken',
   DB: {
     MONGO_HOST: process.env.MONGO_HOST || 'localhost',
     MONGO_DB: process.env.MONGO_DB || 'mgshop-backend',
