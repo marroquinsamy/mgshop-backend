@@ -3,6 +3,9 @@ import config from './config/config'
 import cors from 'cors'
 import morgan from 'morgan'
 import path from 'path'
+import passport from 'passport'
+
+// Import routes
 import productsRoutes from './routes/products.routes'
 
 // Initializations
