@@ -6,7 +6,7 @@ import jwt from 'jsonwebtoken'
 import config from '../config/config'
 
 const createToken = (username: string) => {
-  return jwt.sign(username, config.jwtSecret, { expiresIn: 3600 })
+  return jwt.sign(username, config.jwtSecret, { expiresIn: 84600 })
 }
 
 export const login = (req: Request, res: Response) => {

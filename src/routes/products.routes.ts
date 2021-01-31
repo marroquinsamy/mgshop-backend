@@ -1,18 +1,10 @@
 import { Router } from 'express'
-import * as productController from '../controllers/products.controller'
-import multer from '../lib/multer'
+import * as productsController from '../controllers/products.controller'
 
 const router: Router = Router()
 
-router
-  .route('/products')
-  .get(productController.getProducts)
-  .post(multer.single('image'), productController.createProduct)
+router.get('/products', productsController.getProducts)
 
-router
-  .route('/products/:id')
-  .get(productController.getProduct)
-  .put(productController.updateProduct)
-  .delete(productController.deleteProduct)
+router.get('/products/:id', productsController.getProduct)
 
 export default router

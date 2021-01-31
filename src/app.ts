@@ -7,6 +7,8 @@ import passport from 'passport'
 
 // Import routes
 import productsRoutes from './routes/products.routes'
+import privateProductsRoutes from './routes/products-private.routes'
+import authRoutes from './routes/auth.routes'
 
 // Scripts
 import passportMiddleware from './middlewares/passport'
@@ -27,6 +29,8 @@ passport.use(passportMiddleware)
 
 // Routes
 app.use(productsRoutes)
+app.use(privateProductsRoutes)
+app.use(authRoutes)
 
 // Uploads folder
 app.use('/uploads', express.static(path.resolve('uploads')))
