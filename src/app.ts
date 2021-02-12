@@ -6,9 +6,9 @@ import path from 'path'
 import passport from 'passport'
 
 // Import routes
-import productsRoutes from './routes/products.routes'
-import privateProductsRoutes from './routes/products-private.routes'
-import authRoutes from './routes/auth.routes'
+import productsRoutes from './modules/products/products.routes'
+import adminRoutes from './modules/admin/admin.routes'
+import authRoutes from './modules/auth/auth.routes'
 
 // Scripts
 import passportMiddleware from './middlewares/passport'
@@ -29,7 +29,7 @@ passport.use(passportMiddleware)
 
 // Routes
 app.use(productsRoutes)
-app.use(privateProductsRoutes)
+app.use(adminRoutes)
 app.use(authRoutes)
 
 // Uploads folder

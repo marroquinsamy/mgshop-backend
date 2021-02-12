@@ -1,7 +1,7 @@
 import { Router } from 'express'
 import passport from 'passport'
-import * as productsController from '../controllers/products.controller'
-import multer from '../lib/multer'
+import adminController from './admin.controller'
+import multer from '../../lib/multer'
 
 const router: Router = Router()
 
@@ -9,19 +9,19 @@ router.post(
   '/products',
   passport.authenticate('jwt', { session: false }),
   multer.single('image'),
-  productsController.createProduct
+  adminController.createProduct
 )
 
 router.put(
   '/products/:id',
   passport.authenticate('jwt', { session: false }),
-  productsController.updateProduct
+  adminController.updateProduct
 )
 
 router.delete(
   '/products/:id',
   passport.authenticate('jwt', { session: false }),
-  productsController.deleteProduct
+  adminController.deleteProduct
 )
 
 export default router

@@ -6,13 +6,17 @@ const strategyOptions: StrategyOptions = {
   secretOrKey: config.jwtSecret,
 }
 
-export default new Strategy(strategyOptions, async (payload, done) => {
-  try {
-    if (payload.username === config.admin.username)
-      return done(null, payload.username)
-
+const jwtStrategy: Strategy = new Strategy(
+  strategyOptions,
+  (jwtPayload, done) => {
+    const user = config.admin.username
+    try {
+      if (jwtPayload.username === user) return done(null, user)
+    } catch (error) {
+      console.log(error)
+    }
     return done(null, false)
-  } catch (error) {
-    console.log(error)
   }
-})
+)
+
+export default jwtStrategy
