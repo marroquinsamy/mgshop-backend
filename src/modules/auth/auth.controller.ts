@@ -13,24 +13,36 @@ const createToken = (username: string) => {
   return jwt.sign({ username }, config.jwtSecret, signOptions)
 }
 
-export const login = (req: Request, res: Response) => {
+const login = (req: Request, res: Response) => {
   const { username, password } = req.body
   console.log(username, password)
 
-  if (!username || !password)
-    res.status(400).json({ message: 'Please send your email and password' })
+  setTimeout(() => {
+    try {
+      if (!username || !password)
+        return res.status(400).json({
+          message: 'Por favor envía tu nombre de usuario y tu contraseña',
+        })
 
-  if (username !== config.admin.username)
-    return res.status(400).json({ message: 'The username does not exist' })
+      if (
+        username !== config.admin.username ||
+        password !== config.admin.password
+      )
+        return res.status(400).json({ message: 'Credenciales incorrectos' })
+    } catch (error) {
+      console.log(error)
+    }
 
-  if (password !== config.admin.password)
-    return res.status(400).json({ message: 'The password is incorrect' })
-
-  return res.status(200).json({ token: createToken(username) })
+    return res.status(200).json({ token: createToken(username) })
+  }, 3000)
 }
 
-const authController = {
-  login: login,
+interface IAuthController {
+  login(req: Request, res: Response): void
+}
+
+const authController: IAuthController = {
+  login,
 }
 
 export default authController

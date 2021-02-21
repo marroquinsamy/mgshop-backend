@@ -61,10 +61,7 @@ const updateProduct = async (
   res: Response
 ): Promise<Response> => {
   try {
-    const id: string = req.params.id
-    const title: string = req.body.title
-    const description: string = req.body.description
-    const price: number = req.body.price
+    const { id, title, description, price } = req.body
 
     const updatedProduct: ProductDocument | null = await Product.findByIdAndUpdate(
       id,
@@ -81,10 +78,27 @@ const updateProduct = async (
   }
 }
 
-const adminController = {
-  createProduct: createProduct,
-  deleteProduct: deleteProduct,
-  updateProduct: updateProduct,
+const checkAuth = (req: Request, res: Response): Response => {
+  try {
+    return res.status(200).json()
+  } catch (error) {
+    console.log(error)
+    return res.status(401).json()
+  }
+}
+
+interface IAdminController {
+  createProduct(req: Request, res: Response): Promise<Response>
+  updateProduct(req: Request, res: Response): Promise<Response>
+  deleteProduct(req: Request, res: Response): Promise<Response>
+  checkAuth(req: Request, res: Response): Response
+}
+
+const adminController: IAdminController = {
+  createProduct,
+  updateProduct,
+  deleteProduct,
+  checkAuth,
 }
 
 export default adminController
