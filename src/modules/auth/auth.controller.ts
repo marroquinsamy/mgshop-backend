@@ -6,7 +6,7 @@ import jwt, { SignOptions } from 'jsonwebtoken'
 import config from '../../config/config'
 
 const signOptions: SignOptions = {
-  expiresIn: 60,
+  expiresIn: 3000,
 }
 
 const createToken = (username: string) => {
