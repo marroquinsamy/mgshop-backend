@@ -61,7 +61,8 @@ const updateProduct = async (
   res: Response
 ): Promise<Response> => {
   try {
-    const { id, title, description, price } = req.body
+    const { title, description, price } = req.body
+    const { id } = req.params
 
     const updatedProduct: ProductDocument | null = await Product.findByIdAndUpdate(
       id,
