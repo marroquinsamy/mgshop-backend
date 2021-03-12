@@ -28,7 +28,9 @@ const getProduct = async (
     const product: ProductDocument | null = await Product.findById(id)
 
     if (product) {
-      return res.status(200).json(product)
+      let productInArray: ProductDocument[] = []
+      productInArray.push(product)
+      return res.status(200).json(productInArray)
     } else {
       return res.status(404).json()
     }
