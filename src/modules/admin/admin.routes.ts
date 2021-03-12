@@ -8,7 +8,7 @@ const router: Router = Router()
 router.post(
   '/products',
   passport.authenticate('jwt', { session: false }),
-  multer.single('image'),
+  multer.single('productPicture'),
   adminController.createProduct
 )
 
