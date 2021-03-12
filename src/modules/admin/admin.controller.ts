@@ -1,48 +1,9 @@
 import { Request, Response } from 'express'
-import Product, { ProductDocument } from '../models/Product'
-import path from 'path'
 import fs from 'fs-extra'
+import path from 'path'
+import Product, { ProductDocument } from '../products/products.model'
 
-const duration: number = 0
-
-export const getProducts = async (
-  req: Request,
-  res: Response
-): Promise<Response<ProductDocument[]> | undefined> => {
-  try {
-    const products: ProductDocument[] = await Product.find()
-    // const products: ProductDocument[] = []
-
-    setTimeout(() => {
-      products.length === 0
-        ? res.status(204).json()
-        : res.status(200).json(products)
-    }, duration)
-  } catch (error) {
-    console.log(error)
-    return res.status(500).json('oh noes!')
-  }
-}
-
-export const getProduct = async (
-  req: Request,
-  res: Response
-): Promise<Response<ProductDocument> | undefined> => {
-  try {
-    const { id } = req.params
-    const product: ProductDocument | null = await Product.findById(id)
-
-    setTimeout(() => {
-      product ? res.status(200).json(product) : res.status(404).json()
-    }, duration)
-  } catch (error) {
-    console.log(error)
-
-    return res.status(404).json()
-  }
-}
-
-export const createProduct = async (
+const createProduct = async (
   req: Request,
   res: Response
 ): Promise<Response> => {
@@ -76,7 +37,7 @@ export const createProduct = async (
   }
 }
 
-export const deleteProduct = async (
+const deleteProduct = async (
   req: Request,
   res: Response
 ): Promise<Response> => {
@@ -95,15 +56,13 @@ export const deleteProduct = async (
   }
 }
 
-export const updateProduct = async (
+const updateProduct = async (
   req: Request,
   res: Response
 ): Promise<Response> => {
   try {
-    const id: string = req.params.id
-    const title: string = req.body.title
-    const description: string = req.body.description
-    const price: number = req.body.price
+    const { title, description, price } = req.body
+    const { id } = req.params
 
     const updatedProduct: ProductDocument | null = await Product.findByIdAndUpdate(
       id,
@@ -119,3 +78,28 @@ export const updateProduct = async (
     return res.status(204).json()
   }
 }
+
+const checkAuth = (req: Request, res: Response): Response => {
+  try {
+    return res.status(200).json()
+  } catch (error) {
+    console.log(error)
+    return res.status(401).json()
+  }
+}
+
+interface IAdminController {
+  createProduct(req: Request, res: Response): Promise<Response>
+  updateProduct(req: Request, res: Response): Promise<Response>
+  deleteProduct(req: Request, res: Response): Promise<Response>
+  checkAuth(req: Request, res: Response): Response
+}
+
+const adminController: IAdminController = {
+  createProduct,
+  updateProduct,
+  deleteProduct,
+  checkAuth,
+}
+
+export default adminController
