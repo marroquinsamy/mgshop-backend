@@ -26,8 +26,8 @@ const config: IConfig = {
   },
   jwtSecret: process.env.JWT_SECRET || 'secrettoken',
   admin: {
-    username: process.env.USER_USERNAME || '',
-    password: process.env.USER_PASSWORD || '',
+    username: process.env.ADMIN_USERNAME || '',
+    password: process.env.ADMIN_PASSWORD || '',
   },
 }
 
