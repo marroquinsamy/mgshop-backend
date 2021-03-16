@@ -15,26 +15,17 @@ const createToken = (username: string) => {
 
 const login = (req: Request, res: Response) => {
   const { username, password } = req.body
-  console.log(username, password)
 
-  setTimeout(() => {
-    try {
-      if (!username || !password)
-        return res.status(400).json({
-          message: 'Por favor envía tu nombre de usuario y tu contraseña',
-        })
+  if (
+    !username ||
+    !password ||
+    username !== config.admin.username ||
+    password !== config.admin.password
+  ) {
+    return res.status(400).json({ message: 'Bad credentials.' })
+  }
 
-      if (
-        username !== config.admin.username ||
-        password !== config.admin.password
-      )
-        return res.status(400).json({ message: 'Credenciales incorrectos' })
-    } catch (error) {
-      console.log(error)
-    }
-
-    return res.status(200).json({ token: createToken(username) })
-  }, 3000)
+  return res.status(200).json({ token: createToken(username) })
 }
 
 interface IAuthController {
