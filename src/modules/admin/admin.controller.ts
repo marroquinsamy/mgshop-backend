@@ -7,33 +7,25 @@ const createProduct = async (
   req: Request,
   res: Response
 ): Promise<Response> => {
+  const {
+    title,
+    description,
+    price,
+  }: { title: string; description: string; price: number } = req.body
+  const imagePath: string = req.file.path
+
   try {
-    const {
-      title: hola,
+    const product: ProductDocument = Product.build({
+      title,
       description,
       price,
-    }: { title: string; description: string; price: number } = req.body
-    const imagePath: string = req.file.path
-
-    const productFound: ProductDocument | null = await Product.findOne({
-      title: hola,
-    })
-    if (productFound)
-      return res.status(301).json({ message: 'The product already exists' })
-
-    const product: ProductDocument = Product.build({
-      title: hola,
-      description: description,
-      price: price,
-      imagePath: imagePath,
+      imagePath,
     })
     await product.save()
-    return res
-      .status(201)
-      .json({ message: 'Product successfully saved', product })
+    return res.status(201).json(product)
   } catch (error) {
     console.log(error)
-    return res.status(204).json()
+    return res.status(401).json()
   }
 }
 
