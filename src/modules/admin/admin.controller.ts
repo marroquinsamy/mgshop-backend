@@ -86,27 +86,16 @@ const updateProduct = async (
   return res.status(404).json({ message: 'Product not found.' })
 }
 
-const checkAuth = (req: Request, res: Response): Response => {
-  try {
-    return res.status(200).json()
-  } catch (error) {
-    console.log(error)
-    return res.status(401).json()
-  }
-}
-
 interface IAdminController {
   createProduct(req: Request, res: Response): Promise<Response>
   updateProduct(req: Request, res: Response): Promise<Response>
   deleteProduct(req: Request, res: Response): Promise<Response>
-  checkAuth(req: Request, res: Response): Response
 }
 
 const adminController: IAdminController = {
   createProduct,
   updateProduct,
   deleteProduct,
-  checkAuth,
 }
 
 export default adminController

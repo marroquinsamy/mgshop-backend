@@ -28,12 +28,23 @@ const login = (req: Request, res: Response) => {
   return res.status(200).json({ token: createToken(username) })
 }
 
+const checkAuth = (req: Request, res: Response): Response => {
+  try {
+    return res.status(200).json()
+  } catch (error) {
+    console.log(error)
+    return res.status(401).json()
+  }
+}
+
 interface IAuthController {
   login(req: Request, res: Response): void
+  checkAuth(req: Request, res: Response): Response
 }
 
 const authController: IAuthController = {
   login,
+  checkAuth,
 }
 
 export default authController

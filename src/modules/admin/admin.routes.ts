@@ -24,10 +24,4 @@ router.delete(
   adminController.deleteProduct
 )
 
-router.get(
-  '/check-auth',
-  passport.authenticate('jwt', { session: false }),
-  adminController.checkAuth
-)
-
 export default router
