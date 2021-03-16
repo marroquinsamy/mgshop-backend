@@ -59,23 +59,31 @@ const updateProduct = async (
   req: Request,
   res: Response
 ): Promise<Response> => {
+  const {
+    title,
+    description,
+    price,
+  }: { title: string; description: string; price: number } = req.body
+  const { id } = req.params
+  let updatedProduct: ProductDocument | null
   try {
-    const { title, description, price } = req.body
-    const { id } = req.params
-
-    const updatedProduct: ProductDocument | null = await Product.findByIdAndUpdate(
+    updatedProduct = await Product.findByIdAndUpdate(
       id,
       { title, description, price },
       { new: true }
     )
-
-    return res
-      .status(201)
-      .json({ message: 'Product successfully updated', updatedProduct })
   } catch (error) {
-    console.log(error)
-    return res.status(204).json()
+    console.error(error)
+    return res
+      .status(500)
+      .json({ message: 'Server error. Please try again in a moment.' })
   }
+
+  if (updatedProduct) {
+    return res.status(200).json(updatedProduct)
+  }
+
+  return res.status(404).json({ message: 'Product not found.' })
 }
 
 const checkAuth = (req: Request, res: Response): Response => {
