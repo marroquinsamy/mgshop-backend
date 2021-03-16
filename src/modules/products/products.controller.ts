@@ -26,21 +26,21 @@ const getProduct = async (
   req: Request,
   res: Response
 ): Promise<Response<ProductDocument[]> | undefined> => {
+  const { id } = req.params
+  let product: ProductDocument | null
   try {
-    const { id } = req.params
-    const product: ProductDocument | null = await Product.findById(id)
-
-    if (product) {
-      let productInArray: ProductDocument[] = []
-      productInArray.push(product)
-      return res.status(200).json(productInArray)
-    } else {
-      return res.status(404).json()
-    }
+    product = await Product.findById(id)
   } catch (error) {
     console.log(error)
+    return res.status(404).json({ message: 'Product not found.' })
+  }
 
-    return res.status(404).json()
+  if (product) {
+    let productInArray: ProductDocument[] = []
+    productInArray.push(product)
+    return res.status(200).json(productInArray)
+  } else {
+    return res.status(404).json({ message: 'Product not found.' })
   }
 }
 
