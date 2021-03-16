@@ -33,19 +33,26 @@ const deleteProduct = async (
   req: Request,
   res: Response
 ): Promise<Response> => {
+  const { id } = req.params
+  let deletedProduct: ProductDocument | null
   try {
-    const id: string = req.params.id
-
-    const deletedProduct: ProductDocument | null = await Product.findByIdAndDelete(
-      id
-    )
-    if (deletedProduct) await fs.unlink(path.resolve(deletedProduct.imagePath))
-
-    return res.status(200).json({ message: 'Product deleted', deletedProduct })
+    deletedProduct = await Product.findByIdAndDelete(id)
   } catch (error) {
-    console.log(error)
-    return res.status(204).json()
+    console.error(error)
+    return res
+      .status(500)
+      .json({ message: 'Server error. Please try again in a moment.' })
   }
+
+  if (deletedProduct) {
+    try {
+      await fs.unlink(path.resolve(deletedProduct.imagePath))
+    } catch (error) {
+      console.error(error)
+    }
+    return res.status(200).json(deletedProduct)
+  }
+  return res.status(404).json({ message: 'Product not found.' })
 }
 
 const updateProduct = async (
